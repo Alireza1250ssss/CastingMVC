@@ -7,10 +7,10 @@ use App\core\DB\Connection\MySqlConnection;
 
 class MySqlDatabase implements DatabaseInterface
 {
-    private \PDO $db;
-    private string $table;
-    private string $query;
-    private array $fields = [];
+    private  $db;
+    private  $table;
+    private  $query;
+    private  $fields = [];
 
     public function __construct(ConnectionInterface $connection)
     {
@@ -56,7 +56,9 @@ class MySqlDatabase implements DatabaseInterface
     public function insert(array $fields): DatabaseInterface
     {
         $this->fields = $fields;
-        $params = array_map(fn ($v) => ":$v", array_keys($fields));
+        $params = array_map(function($v){
+            return ":$v";
+        }, array_keys($fields));
         $this->query =
             "INSERT INTO " . $this->table .
             "(" . implode(",", array_keys($fields)) . ") " .
@@ -69,7 +71,9 @@ class MySqlDatabase implements DatabaseInterface
         $this->fields = $fields;
 
         $arr = array_map(
-            fn ($key) => "$key = :$key",
+            function ($key){
+                return "$key = :$key";
+            },
             array_keys($fields),
         );
 

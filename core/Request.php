@@ -26,4 +26,25 @@ class Request{
         return self::$instance;
     }
 
+    public function getInput(){
+        $result = [];
+        foreach($_GET as $key=>$value)
+            $result[$key] = filter_input(INPUT_GET,$key);
+        return $result;
+    }
+
+    public function postInput(){
+        $result = [];
+        foreach($_POST as $key=>$value)
+            $result[$key] = filter_input(INPUT_POST,$key);
+        return $result;
+    }
+
+
+    public function getBody(){
+        if($this->getMethod()=='get')
+            return $this->getInput();
+        return $this->postInput();
+    }
+
 }

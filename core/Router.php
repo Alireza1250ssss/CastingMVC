@@ -7,7 +7,7 @@ use App\core\Application;
 class Router
 {
     public $routes = [];
-    public Request $request;
+    public  $request;
 
     public function __construct(Request $request)
     {

@@ -12,6 +12,7 @@ abstract class  Model
 
     protected  $db;
     protected $query;
+    protected $guarded=[];
     public function __construct()
     {
         $this->db = MySqlDatabase::do();
@@ -31,11 +32,33 @@ abstract class  Model
 
         return $this->query->select()->where($col, $value)->fetch();
     }
-    
+
     // SELECT array $cols from table then fetch or fetchAll
     public function select(array $cols = ['*'])
     {
-    
-        return $this->query->select($cols)->fetchAll();
+
+        return $this->guard_safe($this->query->select($cols)->fetchAll());
+    }
+
+    public function json_converter($field, &$data)
+    {
+
+        foreach ($data as $single_record) {
+            
+            $json_decoded_data = json_decode($single_record->$field) ;
+            $json_decoded_data = is_null($json_decoded_data) ? [] : $json_decoded_data;
+            foreach ($json_decoded_data as $key => $value) {
+                $single_record->$key = $value;
+            }
+        }
+    }
+    public function guard_safe($data){
+        foreach($data as &$record){
+            $record = (array) $record;
+            $record = (object) array_filter($record,function($key){
+                return !in_array($key,$this->guarded);
+            },ARRAY_FILTER_USE_KEY);
+        }
+        return $data;
     }
 }

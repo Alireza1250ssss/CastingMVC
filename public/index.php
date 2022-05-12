@@ -1,7 +1,9 @@
 <?php
-
+// echo "<pre>";var_dump($_SERVER); die;
 require_once __DIR__ . "/../vendor/autoload.php";
 // define("ROOT", $_SERVER['DOCUMENT_ROOT']);
+
+use App\app\Controllers\CourseController;
 use App\core\Application;
 use App\app\renderView;
 use App\app\Controllers\HomeController;
@@ -19,6 +21,9 @@ $app->router->get('/AddTODO', [TodoController::class, 'AddTODO']);
 $app->router->post('/SendForm', [TodoController::class, 'SendForm']);
 $app->router->post('/Toggle', [TodoController::class, 'Toggle']);
 $app->router->get('/Mohammad', [TodoController::class, 'mohammad']);
+$app->router->get('/courses', [CourseController::class, 'index']);
+$app->router->post('/add-courses', [CourseController::class, 'addCourse']);
+$app->router->post('/get-courses', [CourseController::class, 'getCourses']);
 
 /*  $app->router->get('/contact', 'contact');
  $app->router->get('/home', 'home');

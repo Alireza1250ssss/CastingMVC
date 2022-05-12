@@ -5,12 +5,12 @@ namespace App\core\DB\Connection;
 class MySqlConnection implements ConnectionInterface
 {
   private static $instance = null;
-  private $host = "127.0.0.1:3307";
-  private $name = "tododb";
+  private $host = "127.0.0.1:3306";
+  private $name = "onlineeducation";
   private $user = "root";
   private $pass = "";
 
-  private \PDO $conn;
+  private  $conn;
 
   private function __construct()
   {

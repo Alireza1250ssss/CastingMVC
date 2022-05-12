@@ -7,17 +7,17 @@ use App\core\Router;
 use App\core\Request;
 use App\core\Response;
 class Application{
-    public static string $ROOT;
-    public Router $router;
-    public Request $request;
-    public Response $response;
+    public static  $ROOT;
+    public  $router;
+    public static $request;
+    public  $response;
     public static $app;
 
     public function __construct($root)
     {
         self::$ROOT = $root;
-        $this->request = Request::getInstance();
-        $this->router = new Router($this->request);
+        self::$request = Request::getInstance();
+        $this->router = new Router(self::$request);
         $this->response = Response::getInstance();
         self::$app=$this;
     }
